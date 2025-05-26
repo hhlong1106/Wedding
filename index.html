@@ -48,6 +48,12 @@
     canvas {
       display: none;
     }
+    #previewImg {
+      margin-top: 20px;
+      max-width: 350px;
+      border: 2px solid #d63384;
+      border-radius: 10px;
+    }
   </style>
 </head>
 <body>
@@ -62,16 +68,21 @@
   </div>
 
   <canvas id="canvas"></canvas>
+  
+  <img id="previewImg" alt="Preview of invitation will appear here" />
 
   <script>
     const nameInput = document.getElementById('guestName');
     const nameOverlay = document.getElementById('nameOverlay');
+    const previewImg = document.getElementById('previewImg');
 
     nameInput.addEventListener('input', () => {
       nameOverlay.textContent = nameInput.value || 'Nguyễn Văn A';
+      updatePreview();
     });
 
-    function downloadImage() {
+    // Update preview every time input changes
+    function updatePreview() {
       const img = document.getElementById('invitation');
       const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
@@ -87,15 +98,21 @@
       ctx.fillStyle = "#b30059";
       ctx.textAlign = "center";
 
-      // Adjust this number to position text vertically on the image
       ctx.fillText(name, canvas.width / 2, 210);
 
-      // Export as JPEG (quality 0.9)
       const jpegUrl = canvas.toDataURL('image/jpeg', 0.9);
 
+      previewImg.src = jpegUrl;
+    }
+
+    // Initial preview on page load
+    window.onload = updatePreview;
+
+    function downloadImage() {
+      // Just reuse the preview image's src for download
       const link = document.createElement('a');
-      link.download = 'thiep-moi.jpg';  // JPG extension
-      link.href = jpegUrl;
+      link.download = 'thiep-moi.jpg';
+      link.href = previewImg.src;
       link.click();
     }
   </script>
