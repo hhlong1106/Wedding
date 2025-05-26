@@ -23,7 +23,7 @@
     }
     .name-text {
       position: absolute;
-      top: 80px; /* <-- Change this number to move overlay text up/down */
+      top: 80px; /* Adjust this to move overlay text vertically */
       width: 100%;
       text-align: center;
       font-size: 24px;
@@ -66,13 +66,13 @@
   <script>
     const nameInput = document.getElementById('guestName');
     const nameOverlay = document.getElementById('nameOverlay');
-    const img = document.getElementById('invitation');
 
     nameInput.addEventListener('input', () => {
       nameOverlay.textContent = nameInput.value || 'Nguyễn Văn A';
     });
 
     function downloadImage() {
+      const img = document.getElementById('invitation');
       const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
 
@@ -83,22 +83,13 @@
 
       const name = nameInput.value || 'Nguyễn Văn A';
 
-      // Get displayed image height and natural height
-      const displayedHeight = img.clientHeight;
-      const naturalHeight = img.naturalHeight;
-
-      // Overlay CSS top in pixels (match this to your CSS `.name-text { top: XXpx; }`)
-      const overlayTopCssPx = 80; // Change this number if you change CSS 'top'
-
-      // Calculate the scaled y position for canvas text
-      const yPosition = (overlayTopCssPx / displayedHeight) * naturalHeight;
-
       ctx.font = "40px 'Dancing Script', cursive";
       ctx.fillStyle = "#b30059";
       ctx.textAlign = "center";
-      ctx.fillText(name, canvas.width / 2, yPosition);
 
-      // Trigger download
+      // Adjust this number independently from CSS 'top'
+      ctx.fillText(name, canvas.width / 2, 180);
+
       const link = document.createElement('a');
       link.download = 'thiep-moi.png';
       link.href = canvas.toDataURL('image/png');
