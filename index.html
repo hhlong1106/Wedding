@@ -23,7 +23,7 @@
     }
     .name-text {
       position: absolute;
-      top: 50px; /* Adjust this to move overlay text vertically */
+      top: 50px; /* Adjust to move overlay text vertically */
       width: 100%;
       text-align: center;
       font-size: 24px;
@@ -87,12 +87,15 @@
       ctx.fillStyle = "#b30059";
       ctx.textAlign = "center";
 
-      // Adjust this number independently from CSS 'top'
+      // Adjust this number to position text vertically on the image
       ctx.fillText(name, canvas.width / 2, 210);
 
+      // Export as JPEG (quality 0.9)
+      const jpegUrl = canvas.toDataURL('image/jpeg', 0.9);
+
       const link = document.createElement('a');
-      link.download = 'thiep-moi.png';
-      link.href = canvas.toDataURL('image/png');
+      link.download = 'thiep-moi.jpg';  // JPG extension
+      link.href = jpegUrl;
       link.click();
     }
   </script>
