@@ -1,9 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Thiệp cưới điền tên</title>
+  
+  <!-- Google Font: Dancing Script -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet" />
+  
   <style>
     body {
       text-align: center;
@@ -20,12 +23,12 @@
     }
     .name-text {
       position: absolute;
-      top: 500px;
+      top: 80px; /* <-- Change this number to move overlay text up/down */
       width: 100%;
       text-align: center;
       font-size: 24px;
       color: #b30059;
-      font-family: 'Brush Script MT', cursive;
+      font-family: 'Dancing Script', cursive;
       font-weight: bold;
     }
     input {
@@ -50,11 +53,12 @@
 <body>
 
   <h2>Điền tên khách mời vào thiệp</h2>
-  <input type="text" id="guestName" placeholder="Nhập tên khách mời">
+  <label for="guestName" style="display:none;">Nhập tên khách mời</label>
+  <input type="text" id="guestName" placeholder="Nhập tên khách mời" />
   <button onclick="downloadImage()">Tải thiệp về</button>
 
   <div class="container">
-    <img id="invitation" src="invitation.png" alt="Wedding Invitation">
+    <img id="invitation" src="invitation.png" alt="Wedding Invitation" />
     <div class="name-text" id="nameOverlay">Nguyễn Văn A</div>
   </div>
 
@@ -76,14 +80,18 @@
       canvas.width = img.naturalWidth;
       canvas.height = img.naturalHeight;
 
+      // Draw the invitation image
       ctx.drawImage(img, 0, 0);
 
+      // Draw the name text
       const name = nameInput.value || 'Nguyễn Văn A';
-      ctx.font = "40px 'Brush Script MT', cursive";
+      ctx.font = "40px 'Dancing Script', cursive";  // Use same font as overlay
       ctx.fillStyle = "#b30059";
       ctx.textAlign = "center";
-      ctx.fillText(name, canvas.width / 2, 130);
-
+      ctx.fillText(name, canvas.width / 2, 130); 
+      // ^ Change '130' here to move the text up/down on the downloaded image
+     
+      // Trigger download
       const link = document.createElement('a');
       link.download = 'thiep-moi.png';
       link.href = canvas.toDataURL('image/png');
